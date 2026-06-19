@@ -137,7 +137,7 @@ if(usuario.equals(usuarioCorrecto) &&
    password.equals(passwordCorrecta)) {
 
     JOptionPane.showMessageDialog(this,
-        "Bienvenido Administrador");
+        "Bienvenido " + usuario );
 
     Menu mp = new Menu();
     mp.setVisible(true);
