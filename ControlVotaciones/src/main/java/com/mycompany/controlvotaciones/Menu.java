@@ -29,25 +29,25 @@ public class Menu extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        btnRegistrarCandidato = new javax.swing.JButton();
+        btnPosiciones = new javax.swing.JButton();
+        btnRegistrarVoto = new javax.swing.JButton();
+        btnIngresos = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("POSICIONES");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        btnRegistrarCandidato.setText("REGISTRAR CANDIDATO");
+        btnRegistrarCandidato.addActionListener(this::btnRegistrarCandidatoActionPerformed);
 
-        jButton2.setText("REGISTRAR CANDIDATO");
-        jButton2.addActionListener(this::jButton2ActionPerformed);
+        btnPosiciones.setText("POSICIONES");
+        btnPosiciones.addActionListener(this::btnPosicionesActionPerformed);
 
-        jButton3.setText("REGISTRAR VOTO");
-        jButton3.addActionListener(this::jButton3ActionPerformed);
+        btnRegistrarVoto.setText("REGISTRAR VOTO");
+        btnRegistrarVoto.addActionListener(this::btnRegistrarVotoActionPerformed);
 
-        jButton6.setText("INGRESOS");
-        jButton6.addActionListener(this::jButton6ActionPerformed);
+        btnIngresos.setText("INGRESOS");
+        btnIngresos.addActionListener(this::btnIngresosActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
         jLabel1.setText("OPCIONES");
@@ -61,10 +61,10 @@ public class Menu extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(146, 146, 146)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnPosiciones, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegistrarVoto, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRegistrarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(174, 174, 174)
                         .addComponent(jLabel1)))
@@ -75,15 +75,15 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRegistrarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPosiciones, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+                .addComponent(btnRegistrarVoto, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(108, 108, 108))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -106,23 +106,29 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistrarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarCandidatoActionPerformed
  RegistrarCandidato Rc = new RegistrarCandidato ();
         Rc.setVisible(true);
         dispose();        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistrarCandidatoActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnPosicionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPosicionesActionPerformed
+VisualizarPosiciones Vp = new VisualizarPosiciones ();
+        Vp.setVisible(true);
+        dispose();            // TODO add your handling code here:
+    }//GEN-LAST:event_btnPosicionesActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void btnRegistrarVotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVotoActionPerformed
+RegistrarVoto Rv = new RegistrarVoto ();
+        Rv.setVisible(true);
+        dispose();            // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarVotoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnIngresosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresosActionPerformed
+VisualizarIngresos Vi = new VisualizarIngresos ();
+        Vi.setVisible(true);
+        dispose();            // TODO add your handling code here:
+    }//GEN-LAST:event_btnIngresosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,10 +156,10 @@ public class Menu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton6;
+    private javax.swing.JButton btnIngresos;
+    private javax.swing.JButton btnPosiciones;
+    private javax.swing.JButton btnRegistrarCandidato;
+    private javax.swing.JButton btnRegistrarVoto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
