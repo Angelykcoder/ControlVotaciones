@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <registros>
-                                                    
+                                                                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -13,7 +25,7 @@
     
     
     <candidatos>
-                                                                                        
+                                                                                                                                                                                        
         
         
         
@@ -32,57 +44,442 @@
         
         
         
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         <candidato id="1">
-                                                                        
+                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
             
             <fullName>Diego Flores</fullName>
-                                                                        
+                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
             
             <grade>1st</grade>
-                                                                        
+                                                                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
             
             
             
             
             <gender>Masculino</gender>
-                                                                        
+                                                                                                                                                                                                                        
             
             
             
             
-            <votos>35</votos>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <votos>135</votos>
+                                                                                                                                                                                                                    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </candidato>
+                                                                                                                                            
+        
+    
+    
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <candidato id="2">
+                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <fullName>Keilyn Lemus</fullName>
+                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <grade>6th</grade>
+                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <gender>Femenino</gender>
+                                                                                                                                                                        
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <votos>200</votos>
+                                                                                                                                                                    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </candidato>
+                                                                                                            
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <candidato id="3">
+                                                                                                                                                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <fullName>Leandro</fullName>
+                                                                                                                                                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <grade>3rd</grade>
+                                                                                                                                                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <gender>Masculino</gender>
+                                                                                                                                                
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            <votos>200</votos>
+                                                                                                                                            
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        </candidato>
+                                                                                            
+        
+    
+    
+        
+        
+        
+        
+        
+        
+        
+        
+        <candidato id="4">
+                                                                                                            
+            
+            
+            
+            
+            
+            
+            
+            <fullName>Ana Claudia</fullName>
+                                                                                                            
+            
+            
+            
+            
+            
+            
+            
+            <grade>5th</grade>
+                                                                                                            
+            
+            
+            
+            
+            
+            
+            
+            <gender>Femenino</gender>
+                                                                                                            
+            
+            
+            
+            
+            
+            
+            
+            <votos>500</votos>
+                                                                                                        
+        
+        
+        
+        
+        
+        
+        
+        </candidato>
                                                                     
         
         
         
         
-        </candidato>
-                                            
         
-    
-    
-    
         
-        <candidato id="2">
-                        
-            <fullName>Keilyn Lemus</fullName>
-                        
-            <grade>6th</grade>
-                        
-            <gender>Femenino</gender>
-                        
-            <votos>100</votos>
-                    
-        </candidato>
+        
+        <candidato id="5">
+                                                                                                
             
+            
+            
+            
+            
+            
+            <fullName>Pepita De Paz</fullName>
+                                                                                                
+            
+            
+            
+            
+            
+            
+            <grade>2nd</grade>
+                                                                                                
+            
+            
+            
+            
+            
+            
+            <gender>Femenino</gender>
+                                                                                                
+            
+            
+            
+            
+            
+            
+            <votos>100</votos>
+                                                                                            
+        
+        
+        
+        
+        
+        
+        </candidato>
+                                                            
+        
+        
+        
+        
+        
+        
+        <candidato id="6">
+                                                                                    
+            
+            
+            
+            
+            
+            <fullName>Angel</fullName>
+                                                                                    
+            
+            
+            
+            
+            
+            <grade>4th</grade>
+                                                                                    
+            
+            
+            
+            
+            
+            <gender>Masculino</gender>
+                                                                                    
+            
+            
+            
+            
+            
+            <votos>100</votos>
+                                                                                
+        
+        
+        
+        
+        
+        </candidato>
+                                                    
+    
+    
+    
+    
+    
     </candidatos>
-                                                
+                                                                                                
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
