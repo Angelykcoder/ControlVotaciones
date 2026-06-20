@@ -1,24 +1,61 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.controlvotaciones;
+import java.util.List;
+import javax.swing.JOptionPane;
 
-/**
- *
- * @author LENOVO
- */
 public class RegistrarVoto extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrarVoto.class.getName());
 
-    /**
-     * Creates new form RegistrarVoto
-     */
-    public RegistrarVoto() {
+ 
+  public RegistrarVoto() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        
+        // Cargar grados después de initComponents
+        cargarGrados();
+    }
+    
+    private void cargarGrados() {
+        jComboBoxGrade.removeAllItems();
+        jComboBoxGrade.addItem("Seleccionar Grado");
+
+        List<Candidato> todos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : todos) {
+            boolean yaExiste = false;
+            for (int i = 0; i < jComboBoxGrade.getItemCount(); i++) {
+                if (jComboBoxGrade.getItemAt(i).equals(c.getGrade())) {
+                    yaExiste = true;
+                    break;
+                }
+            }
+            if (!yaExiste) {
+                jComboBoxGrade.addItem(c.getGrade());
+            }
+        }
     }
 
+    private void cargarParticipantes(String gradoSeleccionado) {
+        jComboBoxParticipante.removeAllItems();
+        jComboBoxParticipante.addItem("Seleccionar Participante");
+
+        if (gradoSeleccionado == null || gradoSeleccionado.equals("Seleccionar Grado")) {
+            return;
+        }
+
+        List<Candidato> todos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : todos) {
+            if (c.getGrade().equals(gradoSeleccionado)) {
+                jComboBoxParticipante.addItem(c.getFullName());
+            }
+        }
+    }
+
+  
+  
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,14 +70,14 @@ public class RegistrarVoto extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        jComboBoxGrade = new javax.swing.JComboBox<>();
+        jComboBoxParticipante = new javax.swing.JComboBox<>();
         jToggleButton1 = new javax.swing.JToggleButton();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldVotos = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("ENTER");
+        jButton1.setText("BACK");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 24)); // NOI18N
@@ -52,15 +89,22 @@ public class RegistrarVoto extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel3.setText("Participante:");
 
-        jComboBox2.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxGrade.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jComboBoxGrade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxGrade.addActionListener(this::jComboBoxGradeActionPerformed);
 
-        jComboBox3.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxParticipante.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jComboBoxParticipante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jToggleButton1.setText("SAVE");
+        jToggleButton1.addActionListener(this::jToggleButton1ActionPerformed);
 
-        jTextField1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTextFieldVotos.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTextFieldVotos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldVotosKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -76,16 +120,16 @@ public class RegistrarVoto extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(72, 72, 72)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboBoxParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jComboBoxGrade, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTextFieldVotos, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(113, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -103,13 +147,13 @@ public class RegistrarVoto extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxGrade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jComboBoxParticipante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
-                    .addComponent(jTextField1))
+                    .addComponent(jTextFieldVotos))
                 .addContainerGap(58, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -142,19 +186,74 @@ public class RegistrarVoto extends javax.swing.JFrame {
 
         Menu mp = new Menu();
         mp.setVisible(true);
-
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jComboBoxGradeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxGradeActionPerformed
+if (jComboBoxGrade.getSelectedItem() == null) return;
+        
+        String grado = jComboBoxGrade.getSelectedItem().toString();
+        cargarParticipantes(grado);
+    }//GEN-LAST:event_jComboBoxGradeActionPerformed
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // PROTECCIÓN CONTRA NULL
+        if (jComboBoxGrade.getSelectedItem() == null || jComboBoxParticipante.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar grado y participante.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String grado = jComboBoxGrade.getSelectedItem().toString();
+        String participante = jComboBoxParticipante.getSelectedItem().toString();
+        String votosStr = jTextFieldVotos.getText().trim();
+
+        if (grado.equals("Seleccionar Grado") || participante.equals("Seleccionar Participante")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar grado y participante.", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (votosStr.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese la cantidad de votos.", "Error", JOptionPane.WARNING_MESSAGE);
+            jTextFieldVotos.requestFocus();
+            return;
+        }
+
+        try {
+            int votos = Integer.parseInt(votosStr);
+            if (votos <= 0) {
+                JOptionPane.showMessageDialog(this, "La cantidad de votos debe ser mayor a 0.", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (BDXML.registrarVotos(participante, votos)) {
+                JOptionPane.showMessageDialog(this,
+                    "¡" + votos + " voto(s) registrado(s) correctamente a:\n" + participante,
+                    "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                
+                jTextFieldVotos.setText("");
+                // Recargar participantes del mismo grado
+                cargarParticipantes(grado);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo registrar los votos.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Solo se permiten números enteros.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jTextFieldVotosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldVotosKeyTyped
+char c = evt.getKeyChar();
+        if (!Character.isDigit(c) && c != '\b') {
+            evt.consume();
+        }      // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldVotosKeyTyped
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -162,24 +261,23 @@ public class RegistrarVoto extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (Exception ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new RegistrarVoto().setVisible(true));
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxGrade;
+    private javax.swing.JComboBox<String> jComboBoxParticipante;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextFieldVotos;
     private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }

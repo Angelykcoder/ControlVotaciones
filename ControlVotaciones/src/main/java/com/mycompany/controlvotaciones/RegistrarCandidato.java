@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.controlvotaciones;
-
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author LENOVO
@@ -15,10 +18,90 @@ public class RegistrarCandidato extends javax.swing.JFrame {
     /**
      * Creates new form RegistrarCandidato
      */
+    
+        private long lastWarningTime = 0;  // Para controlar el spam de mensajes
     public RegistrarCandidato() {
-        initComponents();
+       initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        cargarCombos();
+        actualizarTablas(); 
     }
 
+    
+    
+        private void cargarCombos() {
+        // ==================== GRADE ====================
+        jComboBox2.removeAllItems();
+        jComboBox2.addItem("Seleccionar");
+        jComboBox2.addItem("Stage 5");
+        jComboBox2.addItem("Stage 6");
+
+        for (int i = 1; i <= 6; i++) {
+            String sufijo;
+            if (i == 1) {
+                sufijo = "st";
+            } else if (i == 2) {
+                sufijo = "nd";
+            } else if (i == 3) {
+                sufijo = "rd";
+            } else {
+                sufijo = "th";
+            }
+            jComboBox2.addItem(i + sufijo);
+        }
+
+        // ==================== GENDER ====================
+        jComboBox1.removeAllItems();
+        jComboBox1.addItem("Seleccionar");
+        jComboBox1.addItem("Femenino");
+        jComboBox1.addItem("Masculino");
+    }
+    
+private void actualizarTablas() {
+        cargarTablaFemenino();
+        cargarTablaMasculino();
+    }
+
+    private void cargarTablaFemenino() {
+        DefaultTableModel model = (DefaultTableModel) jTable2.getModel();
+        model.setRowCount(0);
+        
+        // Solo Nombre y Grado
+        model.setColumnIdentifiers(new String[]{"Nombre Completo", "Grado"});
+
+        List<Candidato> candidatos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : candidatos) {
+            if (c.getGender().equalsIgnoreCase("Femenino")) {
+                model.addRow(new Object[]{
+                    c.getFullName(),
+                    c.getGrade()
+                });
+            }
+        }
+    }
+
+    private void cargarTablaMasculino() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
+        
+        // Solo Nombre y Grado
+        model.setColumnIdentifiers(new String[]{"Nombre Completo", "Grado"});
+
+        List<Candidato> candidatos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : candidatos) {
+            if (c.getGender().equalsIgnoreCase("Masculino")) {
+                model.addRow(new Object[]{
+                    c.getFullName(),
+                    c.getGrade()
+                });
+            }
+        }
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -56,6 +139,11 @@ public class RegistrarCandidato extends javax.swing.JFrame {
         jLabel2.setText("Full Name:");
 
         jTextField1.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField1KeyTyped(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel4.setText("Gender:");
@@ -64,6 +152,7 @@ public class RegistrarCandidato extends javax.swing.JFrame {
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnSave.setText("SAVE");
+        btnSave.addActionListener(this::btnSaveActionPerformed);
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 12)); // NOI18N
         jLabel5.setText("Grade:");
@@ -181,11 +270,11 @@ public class RegistrarCandidato extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(20, 20, 20)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(179, 179, 179))
@@ -243,18 +332,54 @@ public class RegistrarCandidato extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
+// Verificar si hay selección en alguna de las dos tablas
+        int filaFemenino = jTable2.getSelectedRow();
+        int filaMasculino = jTable1.getSelectedRow();
 
-    /**
-     * @param args the command line arguments
-     */
+        String nombreCandidato = null;
+        String tablaSeleccionada = "";
+
+        if (filaFemenino != -1) {
+            nombreCandidato = (String) jTable2.getValueAt(filaFemenino, 0); // Columna 0 = Nombre
+            tablaSeleccionada = "femenino";
+        } else if (filaMasculino != -1) {
+            nombreCandidato = (String) jTable1.getValueAt(filaMasculino, 0); // Columna 0 = Nombre
+            tablaSeleccionada = "masculino";
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor seleccione un candidato en alguna de las tablas para eliminar.", 
+                "Advertencia", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Confirmación
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "¿Está seguro que desea eliminar al candidato?\n\n" + nombreCandidato,
+                "Confirmar Eliminación",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            if (BDXML.eliminarCandidato(nombreCandidato)) {
+                JOptionPane.showMessageDialog(this, 
+                    "Candidato eliminado exitosamente.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                
+                actualizarTablas(); // Refrescar ambas tablas
+            } else {
+                JOptionPane.showMessageDialog(this, 
+                    "No se pudo eliminar el candidato.", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+ 
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -262,14 +387,79 @@ public class RegistrarCandidato extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new RegistrarCandidato().setVisible(true));
+    
+
+    // Variables declaration - do not modify
+    // (Mantén las que ya generó NetBeans)        // TODO add your handling code here:
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
+String fullName = jTextField1.getText().trim();
+        String grade = jComboBox2.getSelectedItem().toString();
+        String gender = jComboBox1.getSelectedItem().toString();
+
+        if (fullName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El nombre completo es obligatorio.", "Error", JOptionPane.WARNING_MESSAGE);
+            jTextField1.requestFocus();
+            return;
+        }
+
+        if (grade.equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un grado válido.", "Error", JOptionPane.WARNING_MESSAGE);
+            jComboBox2.requestFocus();
+            return;
+        }
+
+        if (gender.equals("Seleccionar")) {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar el género.", "Error", JOptionPane.WARNING_MESSAGE);
+            jComboBox1.requestFocus();
+            return;
+        }
+
+        Candidato candidato = new Candidato(fullName, grade, gender);
+
+        if (BDXML.registrarCandidato(candidato)) {
+            JOptionPane.showMessageDialog(this, "¡Candidato registrado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            limpiarCampos();
+            actualizarTablas();
+        }
     }
+
+    private void limpiarCampos() {
+        jTextField1.setText("");
+        jComboBox2.setSelectedIndex(0);
+        jComboBox1.setSelectedIndex(0);
+        jTextField1.requestFocus();
+           // TODO add your handling code here:
+    }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void jTextField1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyTyped
+char c = evt.getKeyChar();
+
+        // Solo permite letras y espacios
+        if (!Character.isLetter(c) && !Character.isWhitespace(c) && c != '\b') {
+            evt.consume();  // Bloquea el carácter
+            
+            // Mensaje solo una vez cada cierto tiempo para no molestar mucho
+            if (System.currentTimeMillis() - lastWarningTime > 2000) {
+                JOptionPane.showMessageDialog(this, 
+                    "Solo se permiten letras y espacios en el nombre.", 
+                    "Aviso", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                lastWarningTime = System.currentTimeMillis();
+            }
+        }    // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1KeyTyped
+
+    /**
+     * @param args the command line arguments
+     */
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDelete;

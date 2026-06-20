@@ -1,24 +1,57 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.mycompany.controlvotaciones;
 
-/**
- *
- * @author LENOVO
- */
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+
+
+
 public class VisualizarIngresos extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarIngresos.class.getName());
 
-    /**
-     * Creates new form VisualizarIngresos
-     */
+   
     public VisualizarIngresos() {
+       
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        cargarTablaVotos();
+        calcularTotalVotos();
     }
 
+    private void cargarTablaVotos() {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Limpiar tabla
+        
+        // Configurar columnas
+        model.setColumnIdentifiers(new String[]{"Grado", "Nombre Completo", "Votos"});
+
+        List<Candidato> candidatos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : candidatos) {
+            model.addRow(new Object[]{
+                c.getGrade(),
+                c.getFullName(),
+                c.getVotos()
+            });
+        }
+    }
+    
+    private void calcularTotalVotos() {
+        int total = 0;
+        List<Candidato> candidatos = BDXML.obtenerTodosCandidatos();
+
+        for (Candidato c : candidatos) {
+            total += c.getVotos();
+        }
+
+        jTextField1.setText(String.valueOf(total));
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,7 +71,7 @@ public class VisualizarIngresos extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("ENTER");
+        jButton1.setText("BACK");
         jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
@@ -137,24 +170,17 @@ public class VisualizarIngresos extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (Exception ex) {
             logger.log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new VisualizarIngresos().setVisible(true));
     }
 

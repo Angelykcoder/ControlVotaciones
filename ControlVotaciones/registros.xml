@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<registros>
+                                                    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <candidatos>
+                                                                                        
+        
+        
+        
+        
+                                    
+        
+        
+            
+        
+        
+            
+    
+    
+        
+        
+        
+        
+        
+        <candidato id="1">
+                                                                        
+            
+            
+            
+            
+            <fullName>Diego Flores</fullName>
+                                                                        
+            
+            
+            
+            
+            <grade>1st</grade>
+                                                                        
+            
+            
+            
+            
+            <gender>Masculino</gender>
+                                                                        
+            
+            
+            
+            
+            <votos>35</votos>
+                                                                    
+        
+        
+        
+        
+        </candidato>
+                                            
+        
+    
+    
+    
+        
+        <candidato id="2">
+                        
+            <fullName>Keilyn Lemus</fullName>
+                        
+            <grade>6th</grade>
+                        
+            <gender>Femenino</gender>
+                        
+            <votos>100</votos>
+                    
+        </candidato>
+            
+    </candidatos>
+                                                
+
+
+
+
+
+
+
+
+
+
+
+</registros>
